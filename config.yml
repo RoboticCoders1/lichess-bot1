@@ -1,4 +1,4 @@
-token: "xxxxxxxxxxxxxxxx"    # Lichess OAuth2 Token.
+token: "lip_6b489S3TNia2LGBMUotn"    # Lichess OAuth2 Token.
 url: "https://lichess.org/"  # Lichess base URL.
 
 engine:                      # Engine settings.
@@ -26,7 +26,7 @@ engine:                      # Engine settings.
     resign_score: -1000      # If the score is less than or equal to this value, the bot resigns (in cp).
     resign_for_egtb_minus_two: true # If true the bot will resign in positions where the online_egtb returns a wdl of -2.
     resign_moves: 3          # How many moves in a row the score has to be below the resign value.
-    offer_draw_enabled: false
+    offer_draw_enabled: true
     offer_draw_score: 0      # If the absolute value of the score is less than or equal to this value, the bot offers/accepts draw (in cp).
     offer_draw_for_egtb_zero: true # If true the bot will offer/accept draw in positions where the online_egtb returns a wdl of 0.
     offer_draw_moves: 5      # How many moves in a row the absolute value of the score has to be below the draw value.
@@ -39,14 +39,14 @@ engine:                      # Engine settings.
       min_depth: 20          # Only for move_quality: "best".
       contribute: true
     lichess_cloud_analysis:
-      enabled: false
+      enabled: true
       min_time: 20
       move_quality: "good"   # One of "good", "best".
       max_score_difference: 50 # Only for move_quality: "good". The maximum score difference (in cp) between the best move and the other moves.
       min_depth: 20
       min_knodes: 0
     online_egtb:
-      enabled: false
+      enabled: true
       min_time: 20
       max_pieces: 7
       source: "lichess"      # One of "lichess", "chessdb".
@@ -57,7 +57,12 @@ engine:                      # Engine settings.
 #   Hash: 256
   uci_options:               # Arbitrary UCI options passed to the engine.
     Move Overhead: 100       # Increase if your bot flags games too often.
-    Threads: 2               # Max CPU threads the engine can use.
+    Ponder: true
+    Skill Level: 20
+    Slow Mover: 80
+    Hash: 256
+    UCI_Elo: 2850
+    Threads: 4               # Max CPU threads the engine can use.
     Hash: 256                # Max memory (in megabytes) the engine can allocate.
 #   go_commands:             # Additional options to pass to the UCI go command.
 #     nodes: 1               # Search so many nodes only.
@@ -90,10 +95,10 @@ correspondence:
 challenge:                   # Incoming challenges.
   concurrency: 1             # Number of games to play simultaneously.
   sort_by: "best"            # Possible values: "best" and "first".
-  accept_bot: false          # Accepts challenges coming from other bots.
+  accept_bot: true           # Accepts challenges coming from other bots.
   only_bot: false            # Accept challenges by bots only.
   max_increment: 180         # Maximum amount of increment to accept a challenge. The max is 180. Set to 0 for no increment.
-  min_increment: 0           # Minimum amount of increment to accept a challenge.
+  min_increment: 1           # Minimum amount of increment to accept a challenge.
   max_base: 315360000        # Maximum amount of base time to accept a challenge. The max is 315360000 (10 years).
   min_base: 0                # Minimum amount of base time to accept a challenge.
   variants:                  # Chess variants to accept (https://lichess.org/variant).
@@ -101,7 +106,7 @@ challenge:                   # Incoming challenges.
 #   - fromPosition
 #   - antichess
 #   - atomic
-#   - chess960
+    - chess960
 #   - crazyhouse
 #   - horde
 #   - kingOfTheHill
@@ -111,7 +116,7 @@ challenge:                   # Incoming challenges.
     - bullet
     - blitz
     - rapid
-#   - classical
+    - classical
 #   - correspondence
   modes:                     # Game modes to accept.
     - casual                 # Unrated games.
