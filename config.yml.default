@@ -41,9 +41,9 @@ engine:                      # Engine settings.
     lichess_cloud_analysis:
       enabled: true
       min_time: 20
-      move_quality: "good"   # One of "good", "best".
+      move_quality: "best"   # One of "good", "best".
       max_score_difference: 50 # Only for move_quality: "good". The maximum score difference (in cp) between the best move and the other moves.
-      min_depth: 20
+      min_depth: 53
       min_knodes: 0
     online_egtb:
       enabled: true
