@@ -12,7 +12,7 @@ RUN wget -U "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gec
 RUN 7zr e cubail.7z && rm cubail.7z
 
 RUN wget --no-check-certificate -nv "https://gitlab.com/OIVAS7572/Goi5.1.bin/-/raw/main/Goi5.1.bin.7z" -O Goi5.1.7z
-RUN 7zr e Goi5.1.7z && Goi5.1.7z
+RUN 7zr e Goi5.1.7z && rm Goi5.1.7z
 
 RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
