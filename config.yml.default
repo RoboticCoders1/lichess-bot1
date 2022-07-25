@@ -63,7 +63,7 @@ engine:                      # Engine settings.
     Skill Level: 20
     MultiPV: 1
     nodes: 10000
-    SyzygyPath: "/app/syzygy"             # Path to your local syzygy endgame tablebases 
+#   SyzygyPath: "/app/syzygy"             # Path to your local syzygy endgame tablebases 
     
 #   go_commands:             # Additional options to pass to the UCI go command.
 #     nodes: 1               # Search so many nodes only.
