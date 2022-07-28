@@ -65,8 +65,6 @@ engine:                      # Engine settings.
     Skill Level: 20
     MultiPV: 1
     nodestime: 0
-    Use NNUE: true
-    EvalFile: "nn-ad9b42354671.nnue"
     
 #   go_commands:             # Additional options to pass to the UCI go command.
 #     nodes: 1               # Search so many nodes only.
