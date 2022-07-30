@@ -4,16 +4,26 @@ COPY . .
 RUN apt-get update && apt-get upgrade -y && apt-get install -y wget unzip python3 python3-pip p7zip
 
 RUN mv config.yml.default config.yml
-RUN wget https://abrok.eu/stockfish/latest/linux/stockfish_x64_bmi2.zip -O stockfish.zip
-RUN unzip stockfish.zip && rm stockfish.zip
-RUN mv stockfish_* engines/stockfish && chmod +x engines/stockfish
+RUN wget "https://github.com/ianfab/Fairy-Stockfish/releases/download/fairy_sf_14_0_1_xq/fairy-stockfish-largeboard_x86-64-bmi2" -O fsf
+RUN mv fsf* engines/fsf && chmod +x engines/fsf
 
-RUN wget -U "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36" --no-check-certificate "https://onedrive.live.com/download?cid=547CCA53C39C1EA1&resid=547CCA53C39C1EA1%21599&authkey=AMLXM4n_ZwOk7VQ" -O cubail.7z
-RUN 7zr e cubail.7z && rm cubail.7z
+RUN wget --no-check-certificate "https://drive.google.com/u/0/uc?id=1r5o5jboZRqND8picxuAbA0VXXMJM1HuS&export=download" -O 3check-313cc226a173.nnue
+RUN mv 3check-313cc226a173.nnue* engines/3check-313cc226a173.nnue
 
-RUN wget --no-check-certificate -nv "https://gitlab.com/OIVAS7572/Goi5.1.bin/-/raw/main/Goi5.1.bin.7z" -O Goi5.1.7z
-RUN 7zr e Goi5.1.7z && rm Goi5.1.7z
+RUN wget --no-check-certificate "https://drive.google.com/u/0/uc?id=14CYA7qV1Jsh5g-lpg46-tz9Whp8zN0aI&export=download" -O atomic-e801e22d2c32.nnue
+RUN mv atomic-e801e22d2c32.nnue* engines/atomic-e801e22d2c32.nnue
 
+RUN wget --no-check-certificate "https://drive.google.com/u/0/uc?id=168vawXrj2fEeRSLuWaL2pB7GXgQelE-c&export=download" -O crazyhouse-be2e41920378.nnue
+RUN mv crazyhouse-be2e41920378.nnue* engines/crazyhouse-be2e41920378.nnue
+
+RUN wget --no-check-certificate "https://drive.google.com/u/0/uc?id=16BQztGqFIS1n_dYtmdfFVE2EexF-KagX&export=download" -O horde-28173ddccabe.nnue
+RUN mv horde-28173ddccabe.nnue* engines/horde-28173ddccabe.nnue
+
+RUN wget --no-check-certificate "https://drive.google.com/u/0/uc?id=1x25r_1PgB5XqttkfR494M4rseiIm0BAV&export=download" -O kingofthehill-978b86d0e6a4.nnue
+RUN mv kingofthehill-978b86d0e6a4.nnue* engines/kingofthehill-978b86d0e6a4.nnue
+
+RUN wget --no-check-certificate "https://drive.google.com/u/0/uc?id=1Tiq8FqSu7eiekE2iaWQzSdJPg-mhvLzJ&export=download" -O racingkings-636b95f085e3.nnue
+RUN mv racingkings-636b95f085e3.nnue* engines/racingkings-636b95f085e3.nnue
 RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
 # Add the "--matchmaking" flag to start the matchmaking mode.
