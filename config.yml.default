@@ -64,6 +64,8 @@ engine:                      # Engine settings.
     Slow Mover: 80
     Skill Level: 20
     MultiPV: 1
+    Use NNUE: true
+    EvalFile: "3check-313cc226a173.nnue;atomic-e801e22d2c32.nnue;crazyhouse-be2e41920378.nnue;horde-28173ddccabe.nnue;kingofthehill-978b86d0e6a4.nnue;racingkings-636b95f085e3.nnue"
     
 #   go_commands:             # Additional options to pass to the UCI go command.
 #     nodes: 1               # Search so many nodes only.
