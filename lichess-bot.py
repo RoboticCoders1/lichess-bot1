@@ -180,7 +180,8 @@ def start(li, user_profile, config, logging_level, log_filename, one_game=False)
                 logger.warning("Unable to handle response from lichess.org:")
                 logger.warning(event)
                 if event.get("error") == "Missing scope":
-                    logger.warning('Please check that the API access token for your bot has the scope "Play games with the bot API".')
+                    logger.warning('Please check that the API access token for your bot has the scope "Play games '
+                                   'with the bot API".')
                 continue
 
             if event["type"] == "terminated":
@@ -725,7 +726,8 @@ def get_online_move(li, board, game, online_moves_cfg, draw_or_resign_cfg):
                                        draw_offered=offer_draw,
                                        resigned=resign)
     out_of_online_opening_book_moves[game.id] += 1
-    if out_of_online_opening_book_moves[game.id] == max_out_of_book_moves:
+    used_opening_books = chessdb_cfg.get("enabled") or lichess_cloud_cfg.get("enabled")
+    if out_of_online_opening_book_moves[game.id] == max_out_of_book_moves and used_opening_books:
         logger.info("Will stop using online opening books.")
     return chess.engine.PlayResult(None, None)
 
@@ -892,8 +894,8 @@ def intro():
 def start_lichess_bot():
     parser = argparse.ArgumentParser(description="Play on Lichess with a bot")
     parser.add_argument("-u", action="store_true", help="Upgrade your account to a bot account.")
-    parser.add_argument("-v", action="store_true", help="Make output more verbose. Include all communication with lichess.org.")
-    parser.add_argument("--config", help="Specify a configuration file (defaults to ./config.yml)")
+    parser.add_argument("-v", action="store_true", help="Make output more verbose. Include all communication with lichess.")
+    parser.add_argument("--config", help="Specify a configuration file (defaults to ./config.yml).")
     parser.add_argument("-l", "--logfile", help="Record all console output to a log file.", default=None)
     args = parser.parse_args()
 

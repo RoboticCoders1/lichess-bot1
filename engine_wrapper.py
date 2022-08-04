@@ -118,7 +118,8 @@ class EngineWrapper:
         return time_limit
 
     def offer_draw_or_resign(self, result, board):
-        actual = lambda score: score.relative.score(mate_score=40000)
+        def actual(score):
+            return score.relative.score(mate_score=40000)
 
         can_offer_draw = self.draw_or_resign.get("offer_draw_enabled", False)
         draw_offer_moves = self.draw_or_resign.get("offer_draw_moves", 5)
@@ -128,8 +129,10 @@ class EngineWrapper:
         enough_pieces_captured = pieces_on_board <= draw_max_piece_count
         if can_offer_draw and len(self.scores) >= draw_offer_moves and enough_pieces_captured:
             scores = self.scores[-draw_offer_moves:]
-            scores_near_draw = lambda score: abs(actual(score)) <= draw_score_range
-            if len(scores) == len(list(filter(scores_near_draw, scores))):
+
+            def score_near_draw(score):
+                return abs(actual(score)) <= draw_score_range
+            if len(scores) == len(list(filter(score_near_draw, scores))):
                 result.draw_offered = True
 
         resign_enabled = self.draw_or_resign.get("resign_enabled", False)
@@ -137,8 +140,10 @@ class EngineWrapper:
         resign_score = self.draw_or_resign.get("resign_score", -1000)
         if resign_enabled and len(self.scores) >= min_moves_for_resign:
             scores = self.scores[-min_moves_for_resign:]
-            scores_near_loss = lambda score: actual(score) <= resign_score
-            if len(scores) == len(list(filter(scores_near_loss, scores))):
+
+            def score_near_loss(score):
+                return actual(score) <= resign_score
+            if len(scores) == len(list(filter(score_near_loss, scores))):
                 result.resigned = True
         return result
 
@@ -188,9 +193,8 @@ class EngineWrapper:
     def get_stats(self, for_chat=False):
         info = self.last_move_info.copy()
         stats = ["depth", "nps", "nodes", "score", "ponderpv"]
-        result = [f"{stat}: {info[stat]}" for stat in stats if stat in info]
-        if for_chat:
-            bot_stats = filter(lambda line: not line.startswith("ponderpv"), result)
+        if for_chat and "ponderpv" in stats:
+            bot_stats = [f"{stat}: {info[stat]}" for stat in stats if stat in info and stat != "ponderpv"]
             len_bot_stats = len(", ".join(bot_stats)) + PONDERPV_CHARACTERS
             ponder_pv = info["ponderpv"].split()
             try:
@@ -201,7 +205,7 @@ class EngineWrapper:
                 info["ponderpv"] = " ".join(ponder_pv)
             except IndexError:
                 pass
-        return result
+        return [f"{stat}: {info[stat]}" for stat in stats if stat in info]
 
     def get_opponent_info(self, game):
         pass
@@ -291,4 +295,4 @@ class XBoardEngine(EngineWrapper):
 
 def getHomemadeEngine(name):
     import strategies
-    return eval(f"strategies.{name}")
+    return getattr(strategies, name)
